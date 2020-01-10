@@ -77,13 +77,18 @@ namespace Polyreid
 
             StartCoroutine(LoopThroughGameBackgroundMusic());
         }
-
+        
+        //While the Player is in a match, the regular background music will play.
         private IEnumerator LoopThroughGameBackgroundMusic()
         {
             bool isLooping = true;
 
             int numberOfSongsInArray = 0;
-
+            
+            // This little check is for whether the Player is in the Main Menu scene or the Game scene. Main Menu scene has an
+            // AudioClip array length of 2 (due to having two songs that loop) and the Game scene has an AudioClip array of 7
+            // (0 - 2 are for when the Player is in a match, 3 and 4 are for Victory music, and 5 - 6 are for Defeat Music.)
+            // The amount of clips in the array determines how far into the array it needs to go into.
             if (backgroundMusicAudioClips.Length > 2)
                 numberOfSongsInArray = 3;
             else
@@ -127,7 +132,8 @@ namespace Polyreid
                 spellSFXSource.Play();
             }
         }
-
+        
+        // After the Player wins or loses a match, the appropriate music will play.
         public IEnumerator PlayAndLoopThroughResultMusic(bool isWon)
         {
             StopCoroutine(LoopThroughGameBackgroundMusic());
